@@ -271,7 +271,10 @@ elif st.session_state.authenticated:
                                             if "download" in user_permissions:
                                                 st.download_button("📥 Baixar PDF", f, file_name=file, mime="application/pdf", key=hash_key("dl_" + full_path))
                                         elif file.lower().endswith(('.jpg', '.jpeg', '.png')):
-                                            st.image(f.read(), caption=file)
+                                            try:
+                                                st.image(f.read(), caption=file)
+                                            except Exception as e:
+                                                st.warning(f"Não foi possível exibir a imagem '{file}': {str(e)}")
                                             f.seek(0)
                                             if "download" in user_permissions:
                                                 st.download_button("📥 Baixar Imagem", f, file_name=file, key=hash_key("img_" + full_path))
